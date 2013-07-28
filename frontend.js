@@ -115,9 +115,34 @@ for (var i = 0; i< data.length; i++)
 
 this.r_download = function()
 {
-alert("DOWNLOAD");	
+var query = $("#sql_query").val();
+	
+	self.actual_query = query;
+	
+	query = encodeURIComponent(query);
+	
+	alert(query);
+	
+    if (query != "")
+    	{
+    			
+        var url = "http://toskana.ludicmedia.de:10000/query_download?" + self.actual_query;
+	
+		$.ajax({
+	   		type : "GET",
+	    	url : url
+	
+	   		}).done(function(msg) {
+	  		
+	  		
+	  		$("#query_form").fadeOut();
+	  		self.paint_query_results(msg);
+	  		});		
+    		
+    		
+    		
+    	}
 }
-
 
 this.query = function()
 	{
