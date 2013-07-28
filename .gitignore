@@ -1,4 +1,6 @@
 lib-cov
+*.project
+*.Rhistory
 *.db
 *.seed
 *.log
