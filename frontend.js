@@ -1,7 +1,7 @@
 Frontend = {};
 
 
-
+// Hier kommt der Frontend Designer
 Frontend.Designer = function()
 {
 var self = this;
