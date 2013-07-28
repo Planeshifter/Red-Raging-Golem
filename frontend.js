@@ -85,6 +85,8 @@ this.rss = function()
 	alert("RSS");
 	}
 
+
+// action for Twitter button
 this.twitter = function()
 	{
 	var url = "http://toskana.ludicmedia.de:10000/tweets"
