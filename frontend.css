@@ -1,0 +1,164 @@
+#HeaderBar
+{
+position: absolute;
+left: 0;
+top: 0;
+width: 100%;
+height: 60px;	
+background: gainsboro;	
+background-image: url(tweed.png);
+background-repeat: repeat;	
+color: white;
+text-align: center;
+font-size: 24px;
+letter-spacing: 2px;
+font-family: Open Sans;
+
+-o-box-shadow:       0 2px 6px #000000;
+-moz-box-shadow:     0 2px 6px #000000;
+-webkit-box-shadow:  0 2px 6px #000000;
+ box-shadow:         0 2px 6px #000000;
+
+text-shadow: 0.1em 0.1em 0.2em black;
+
+}
+
+#HeaderBar #Titling
+{
+position: absolute;
+left: 0;
+right: 0;
+margin: auto;
+top: 0;
+bottom: 0;
+height: 30px;
+width: 100px;
+text-align: block;
+display: block;	
+}
+
+
+.HeaderButton
+{
+position: relative;
+margin-left: 16px;
+margin-top: 10px;
+float: left;
+height: 40px;
+width: 40px;
+opacity: 0.5;
+cursor: pointer;
+}
+
+
+.HeaderButton:hover
+{
+opacity: 1;	
+}
+
+.HeaderButton img
+{
+width: 100%;
+height: 100%;	
+}
+
+
+#query_form
+{
+position: absolute;
+width: 50%;
+height: 50%;
+margin: auto;
+left:0;
+right: 0;
+top: 25%;
+background-image: url(tweed.png);
+background-repeat: repeat;	
+
+
+-o-box-shadow:       0 2px 6px #000000;
+-moz-box-shadow:     0 2px 6px #000000;
+-webkit-box-shadow:  0 2px 6px #000000;
+ box-shadow:         0 2px 6px #000000;
+}
+
+
+#query_form #header
+{
+width: 100%;
+height: 20px;
+position: relative;
+left: 0;
+top:0;
+background: black;
+font-family:Open Sans;
+color: rgba(255,255,255,0.6);	
+letter-spacing: 3px;
+font-size: 80%;
+cursor: pointer;
+margin-bottom: 16px;
+}
+
+
+#query_form input
+{
+outline: none;
+background: silver;
+margin-left:10%;
+width: 80%;
+height: 40px;
+font-family: Open Sans;	
+font-size: 115%;
+}
+
+
+.submit_button
+{
+position: absolute;
+margin: auto;
+left: 0;
+right: 0;
+background: black;
+width: 30%;
+height: 40px;
+bottom: 8px;
+font-family: Open Sans;	
+
+-o-box-shadow:       0 2px 6px #000000;
+-moz-box-shadow:     0 2px 6px #000000;
+-webkit-box-shadow:  0 2px 6px #000000;
+ box-shadow:         0 2px 6px #000000;
+ 
+ color: darkgray;
+ text-align: center;
+ letter-spacing: 7px;
+ font-size: 120%;
+ 
+ cursor:pointer;
+text-shadow: 0.1em 0.1em 0.2em gray;
+}
+
+
+.submit_button:hover
+{
+-o-box-shadow:       0 2px 9px #000000;
+-moz-box-shadow:     0 2px 9px #000000;
+-webkit-box-shadow:  0 2px 9px #000000;
+ box-shadow:         0 2px 9px #000000;
+ 
+ color: white;	
+}
+
+
+
+.legend
+{
+position: relative;
+left: 10%;
+width: 90%;
+color: gainsboro;
+font-variant: small-caps;
+font-family: Open Sans;
+font-size: 12pt;
+margin: 9px;
+}
