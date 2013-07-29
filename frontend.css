@@ -124,7 +124,7 @@ right: 0;
 top: 25%;
 background-image: url(tweed.png);
 background-repeat: repeat;	
-
+z-index: 100;
 
 -o-box-shadow:       0 2px 6px #000000;
 -moz-box-shadow:     0 2px 6px #000000;
