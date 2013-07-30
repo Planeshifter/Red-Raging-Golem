@@ -47,13 +47,6 @@ this.paint_query_results = function(data)
 {
 test = data;	
 
-
-  var columns = [
-    {id: "title", name: "Title", field: "field_1"},
-    {id: "duration", name: "Duration", field: "field_2"}
-  ];
-
-
 if (data[0])
  {
  obj = data[0];	
@@ -68,7 +61,7 @@ if (data[0])
  		     name: name,
  		     field: name, 
  		     minWidth: 80,
- 		     sortable: true,
+ 		     sortable: true
  		     }	
  		     
  	columns.push(c);	     
@@ -79,19 +72,39 @@ if (data[0])
     enableCellNavigation: true,
     enableColumnReorder: false,
     forceFitColumns: true,
+    syncColumnCellResize: false,
+    enableTextSelectionOnCells: true,
   };	
+  
+    var gridSorter = function(columnField, isAsc, grid, data) {
+       var sign = isAsc ? 1 : -1;
+       var field = columnField
+       data.sort(function (dataRow1, dataRow2) {
+              var value1 = dataRow1[field], value2 = dataRow2[field];
+              var result = (value1 == value2) ?  0 :
+                         ((value1 > value2 ? 1 : -1)) * sign;
+              return result;
+       });
+       grid.invalidate();
+       grid.render();
+   } 
 	
-	
-var grid = new Slick.Grid("#QueryBody", data, columns, options);	
+var grid = new Slick.Grid("#QueryBody", data, columns, options);
+
+var isAsc = true;
+var columnField = columns[0].field;
+
+gridSorter(columnField, isAsc, grid, data);
+
+grid.setSortColumn(columnField, isAsc); 
 
 grid.onSort.subscribe(function (e, args) {
 
-	
-    currentSortCol = args.sortCol;
-    isAsc = args.sortAsc;
-    grid.invalidateAllRows();
-    grid.render();
+	gridSorter(args.sortCol.field, args.sortAsc, grid, data);
+
   });
+  
+grid.registerPlugin(new Slick.AutoTooltips());
 
 
 /*
