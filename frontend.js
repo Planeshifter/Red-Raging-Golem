@@ -9,23 +9,32 @@ Frontend.Designer = function()
 var self = this;
 
 this.actual_query = null;
+this.actual_db = null;
 
 
 this.submit_query = function()
 	{
-	var query = $("#sql_query").val();
-	
-	self.actual_query = query;
-	
+	var database = $('input:radio["DatabaseChoice"]:checked').val();
+	var url = "";
+    var query = $("#sql_query").val();
+    self.actual_query = query;
+    self.actual_db = database;
 	query = encodeURIComponent(query);
-	
-	alert(query);
-	
+    
+	switch(database)
+	 {
+	 case "tweets":
+	 url = "http://toskana.ludicmedia.de:10000/tweet_query?" + query;
+	 break;
+	 
+	 case "articles":
+	 url = "http://toskana.ludicmedia.de:10000/query?" + query;
+	 break;	
+	 }
+		
     if (query != "")
     	{
     			
-        var url = "http://toskana.ludicmedia.de:10000/query?" + query;
-	
 		$.ajax({
 	   		type : "GET",
 	    	url : url
@@ -38,13 +47,13 @@ this.submit_query = function()
 	  		});		
     		
     		
-    		
     	}
 	}
 
 
 this.paint_query_results = function(data)
 {
+$("#rDownload").show();
 test = data;	
 
 if (data[0])
@@ -60,7 +69,7 @@ if (data[0])
  		     id: name,
  		     name: name,
  		     field: name, 
- 		     minWidth: 80,
+ 		     minWidth: 120,
  		     sortable: true
  		     }	
  		     
@@ -132,30 +141,47 @@ var query = $("#sql_query").val();
 	
 	self.actual_query = query;
 	
+	var url="";
+
+	switch(self.actual_db)
+	 {
+	 case "tweets":
+	 url = "http://toskana.ludicmedia.de:10000/tweet_download?" + self.actual_query;
+	 break;
+	 
+	 case "articles":
+	 url = "http://toskana.ludicmedia.de:10000/query_download?" + self.actual_query;
+	 break;	
+	 }
+			
 	query = encodeURIComponent(query);
-	
-	alert(query);
 	
     if (query != "")
     	{
-    			
-        var url = "http://toskana.ludicmedia.de:10000/query_download?" + self.actual_query;
-	
+    				
 		$.ajax({
 	   		type : "GET",
 	    	url : url
 	
 	   		}).done(function(msg) {
-	  		
-	  		
+	  			  		
 	  		$("#query_form").fadeOut();
-	  		self.paint_query_results(msg);
+	  		self.create_download_link();
 	  		});		
     		
     		
     		
     	}
 }
+
+this.create_download_link = function()
+	{
+    var s = '<a id="DownloadLink" href="http://toskana.ludicmedia.de/Downloads/Download.zip" download="Download.zip" class="DownloadButton">Download File</a>';
+    $("#HeaderBar").append(s);	
+    $("#DownloadLink").click(function() {
+    $(this).remove();	
+    });
+	}
 
 this.query = function()
 	{
@@ -169,6 +195,14 @@ this.query = function()
 		 s += '<div class = "legend">your query</div>';
 		 
 		 s += '<input id = "sql_query" type="text"/>';
+		 
+		 s += '<form id="DatabaseChoice">'
+         s += '<p>Select the Database:</p>'
+         s += '<p>'
+         s += '<input class="radioButton" type="radio" name="Datenbank" value="tweets" checked> Tweets<br>'
+         s += '<input class="radioButton" type="radio" name="Datenbank" value="articles"> Articles<br>'
+         s += '</p>'
+         s += '</form>'
 
 		s += '<div class = "submit_button" id = "query_submit_button">SUBMIT</div>'
 
@@ -200,9 +234,13 @@ this.rss = function()
 	alert("RSS");
 	}
 
+this.twitter = function()
+	{
+		
+	}
 
 // action for Twitter button
-this.twitter = function()
+this.twitter_query = function()
 	{
 	var url = "http://toskana.ludicmedia.de:10000/tweets"
 	
