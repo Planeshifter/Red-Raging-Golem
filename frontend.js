@@ -69,8 +69,10 @@ if (data[0])
  		     id: name,
  		     name: name,
  		     field: name, 
- 		     minWidth: 120,
- 		     sortable: true
+ 		     minWidth: 80,
+ 		     width: 120,
+ 		     sortable: true,
+ 		     toolTip: name
  		     }	
  		     
  	columns.push(c);	     
@@ -80,7 +82,7 @@ if (data[0])
   var options = {
     enableCellNavigation: true,
     enableColumnReorder: false,
-    forceFitColumns: true,
+    forceFitColumns: false,
     syncColumnCellResize: false,
     enableTextSelectionOnCells: true,
   };	
