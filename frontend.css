@@ -47,6 +47,72 @@ text-align: block;
 display: block;	
 }
 
+#FooterBar 
+{
+position: absolute;
+left: 0;
+bottom: 0;
+width: 100%;
+height: 3%;	
+background: gainsboro;	
+background-image: url(images/tweed.png);
+background-repeat: repeat;	
+color: white;
+text-align: center;
+font-size: 24px;
+letter-spacing: 2px;
+font-family: Open Sans;
+
+-o-box-shadow:       0 2px 6px #000000;
+-moz-box-shadow:     0 2px 6px #000000;
+-webkit-box-shadow:  0 2px 6px #000000;
+ box-shadow:         0 2px 6px #000000;
+
+text-shadow: 0.1em 0.1em 0.2em black;	
+z-index: 101;
+	
+}
+
+#leftarrow
+{
+position:absolute;
+left: 5px;
+top: 0;
+margin: auto;
+bottom: 0;
+font-family: Open Sans;
+color: white;
+font-size: 80%;
+display: none;
+cursor: pointer;
+}
+
+#rightarrow
+{
+position:absolute;
+right: 5px;
+top: 0;
+margin: auto;
+bottom: 0;
+font-family: Open Sans;
+color: white;
+font-size: 80%;
+display: none;
+cursor: pointer;
+}
+
+#counterpage
+{
+left: 46%;
+position: absolute;
+width: 100px;
+height: 90%;	
+font-family: Open Sans;
+color: white;
+font-size: 50%;
+top: 0;
+}
+
 
 .HeaderButton
 {
@@ -122,11 +188,134 @@ position: absolute;
 top: 60px;
 left: 0;
 width: 100%;
-height: 91%;
+height: 88%;
 background:rgba(255,255,255,0.5);
+overflow-y: auto;
 }
 
+#glass 
+{
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+background: rgba(0,0,0,0.6);	
+z-index: 100;
+}
 
+#glass_spinner
+{
+margin: auto;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
+position: absolute;
+width: 100px;
+height: 100px;
+color: green;	
+}
+
+#search_process_form
+{
+position: absolute;
+width: 50%;
+height: 75%;
+margin: auto;
+left:0;
+right: 0;
+top: 15%;
+background-image: url(images/tweed.png);
+background-repeat: repeat;	
+z-index: 100;
+
+-o-box-shadow:       0 2px 6px #000000;
+-moz-box-shadow:     0 2px 6px #000000;
+-webkit-box-shadow:  0 2px 6px #000000;
+ box-shadow:         0 2px 6px #000000;	
+}
+
+#search_process_form #header
+{
+width: 100%;
+height: 20px;
+position: relative;
+left: 0;
+top:0;
+background: black;
+font-family:Open Sans;
+color: rgba(255,255,255,0.6);	
+letter-spacing: 3px;
+font-size: 80%;
+cursor: pointer;
+margin-bottom: 16px;
+}
+
+#search_process_form input
+{
+outline: none;
+background: silver;
+margin-left:10%;
+width: 80%;
+height: 40px;
+font-family: Open Sans;	
+font-size: 115%;
+}
+
+#search_process_form .small_input
+{
+position: relative;
+outline: none;
+background: silver;
+margin-left:5%;
+width: 27%;
+height: 20px;
+float: left;
+font-family: Open Sans;	
+font-size: 115%;
+}
+
+.small_legend
+{
+position: relative;
+left: 5%;
+width: 30%;
+color: gainsboro;
+float: left;
+font-variant: small-caps;
+font-family: Open Sans;
+font-size: 12pt;
+margin: 9px;	
+}
+
+.multi_container
+{
+margin-top: 5px;
+margin-left:10%;
+width: 80%;
+height: auto;	
+}
+
+#language_option
+{
+outline: none;
+margin-left:10%;
+width: 20%;
+height: 20px;
+font-family: Open Sans;	
+font-size: 115%;		
+}
+
+#language_option select
+{
+font-family: Open Sans;	
+font-size: 12px;
+background: black;
+color: white;
+outline: none;
+height: 25px;	
+}
 
 #query_form
 {
