@@ -1,5 +1,19 @@
-Frontend = {};
+function parseJson(code)
+{
+    try {
+        return JSON.parse(code);
+    } catch (e) {
+        return code;
+    }
+}
 
+String.prototype.double_quotes = function() 
+{ 
+return this.replace(/[\\"]/g, '""');
+}
+
+
+Frontend = {};
 
 var test;
 
@@ -12,6 +26,118 @@ this.actual_query = null;
 this.actual_db = null;
 this.spinner = null;
 this.package_list = [];
+this.search_process_list = [];
+this.process_edit_mode = true;
+
+this.trigger_search_process_edit = function(id)
+{
+self.process_edit_mode = true;
+var sp = self.search_process_list[id];	
+
+self.show_search_process();	
+$("#process_title").val(sp.title);
+$("#process_query").val(sp.query);
+$("#process_lat").val(sp.lat);
+$("#process_lng").val(sp.lng);
+$("#process_radius").val(sp.radius);
+$("#process_submit_button").html("UPDATE");
+
+$("#process_submit_button").attr("edit_id",sp.Id);
+}
+
+
+this.paint_search_processes = function(data)
+{
+for (var i = 0; i < data.length; i++)
+	{
+	var name = "sp_" + i;
+	var s = '<div class="search_process_info">';
+		s += '<div class="search_process_title" id="' + name +'">';
+		s += data[i].title;
+		s += '</div>';
+		// s += '<input type="checkbox" class="active_process" name="zutat" value="salami">';
+		s += '</div>';
+		
+	$("#search_process_container").append(s);
+	
+	
+	 $("#"+name).attr("data_id", i);
+    $("#"+name).click(function(){
+    var id = $(this).attr("data_id");
+    self.trigger_search_process_edit(id);
+    });
+	}
+}
+
+this.load_all_search_processes = function()
+{
+
+var url = "http://toskana.ludicmedia.de:10000/all_search_processes";
+		$.ajax({
+	   		type : "GET",
+	    	url : url
+	
+	   		}).done(function(msg) {
+	   		var data = parseJson(msg);
+	   	    self.search_process_list = data;
+	   		self.paint_search_processes(data);
+	  		});	
+	
+}
+
+this.help = function()
+{
+var help_text = 'TEST TEXT'
+var x = document.getElementById("help");
+	if (!x)
+		{
+		var s = '<div id="help">';
+		s   += '<div id="header"> HELP PAGE </div>';
+		s   += '<div id="container"> </div>'
+		s   += '</div>';
+		
+	    $("body").append(s);
+	    $("#help #container").append(help_text);
+	    
+	    $("#help #header").click(function() 
+		 {
+		 $("#help").fadeOut();	
+		 });
+	    	 
+		}
+	else $("#help").show();
+			
+}
+
+this.process_administration = function()
+{
+	var x = document.getElementById("admin_search_process");
+	if (!x)
+		{
+		var s = '<div id="admin_search_process">';
+		s   += '<div id="search_process_toolbar">';
+		s   += '<div id="new_process" class="search_process_button"><img src="images/plus.svg"/></div>';
+		s   += '<\div>';
+	    s   += '<div id="search_process_container"></div>';
+		s   += '</div>';
+		
+	    $("body").append(s);
+	    
+	    self.load_all_search_processes();
+	    
+	     $("#new_process").click(function() 
+		 {
+		 self.process_edit_mode = false;
+		 self.twitter();
+		 $("#process_submit_button").html("CREATE");
+		 });
+		 
+		 
+		}
+	else $("#admin_search_process").show();
+	
+	
+}
 
 this.show_search_process = function()
 	{
@@ -60,23 +186,29 @@ this.show_search_process = function()
 		 
 		 $("#process_submit_button").click(function()
 		 {
-         var process = {};
-         process.title = $("#process_title").val();
-         process.query = $("#process_query").val();
-         process.lat =  $("#process_lat").val();
-         process.lng =  $("#process_lng").val();
-         process.radius =  $("#process_radius").val();
-         process.language = $("#language_select").val();
-         process.typus = "twitter_job";
-         
-  
-         var check = self.search_process_plausibilty(process);
-         if (check == true)
-	         {
-	         self.submit_search_process(process);
-	         }
+		    var process = {};
+	         process.title = $("#process_title").val();
+	         process.query = $("#process_query").val();
+             process.lat =  $("#process_lat").val();
+	         process.lng =  $("#process_lng").val();
+	         process.radius =  $("#process_radius").val();
+	         process.language = $("#language_select").val();
+	         process.typus = "twitter_job";
 	         
+
+	         var check = self.search_process_plausibilty(process);
+	         if (check == true)
+		         {
+		         	
+		          if (self.process_edit_mode == false) self.submit_search_process(process);
+		          else self.update_search_process(process);
+		         }
+		      
+	      
+
+	            
 		 });
+		 
 		 
 		 $("#process_lng").change(function()
 		 {
@@ -90,11 +222,53 @@ this.show_search_process = function()
 			 } 
 		 });
 		}	
-	else $("#search_process_form").show();	
+	else 
+		{
+			$("#search_process_form").show();
+			self.help();
+			$("#process_title").val("");
+	        $("#process_query").val("");
+            $("#process_lat").val("");
+	        $("#process_lng").val("");
+	        $("#process_radius").val("");
+	        $("#language_select").val("");
+		}	
 	}
+	
+this.update_search_process = function(process)
+{
+var id = $("#process_submit_button").attr("edit_id");	
+process.Id = id;
+process.title = process.title.double_quotes();
+process.query = process.query.double_quotes();
+
+this.show_glass();
+var data = JSON.stringify(process);	
+var url = "http://toskana.ludicmedia.de:10000/update_search_process";
+ 
+   $.post(url,
+            {
+            'data' : data},
+            function(data){
+
+            $("#glass").hide();
+	  		self.spinner.stop();
+	  		$("#search_process_form").fadeOut();
+	  		$("#search_process_container").html("");
+	  		self.load_all_search_processes();
+        // angekommen
+
+            }).error(function(data, textStatus)
+            {
+            // alert(data.responseText);
+            });	
+	
+}
 
 this.submit_search_process = function(process)
 {
+process.title = process.title.double_quotes();
+process.query = process.query.double_quotes();
 	
 var data = JSON.stringify(process);	
 var url = "http://toskana.ludicmedia.de:10000/new_search_process";
@@ -114,6 +288,22 @@ var url = "http://toskana.ludicmedia.de:10000/new_search_process";
 		
 }
 
+this.active_page = function(page)
+{
+switch(page)
+	{
+	case "admin_search_process":
+		$("#query_form").hide();
+	break;
+	
+	case "query_form":
+		$("#admin_search_process").hide();
+		$("#search_process_form").hide();
+		$("#help").hide();
+	break;	
+	}	
+	
+}
 
 this.check_number = function(val)
 {
@@ -522,12 +712,15 @@ this.init = function()
 	  });
 	  
 	$("#twitter").click( function(){		
-		self.twitter();
+		//self.twitter();
+		self.active_page("admin_search_process");
+		self.process_administration();
 	  });
 	
 	
  	$("#query").click( function(){		
 		self.query();
+		self.active_page("query_form");
 	  });
 		  
 	 $("#rDownload").click( function(){	
