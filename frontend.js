@@ -72,7 +72,7 @@ for (var i = 0; i < data.length; i++)
 this.load_all_search_processes = function()
 {
 
-var url = "http://toskana.ludicmedia.de:10000/all_search_processes";
+var url = "http://www.philipp-burckhardt.com:10000/all_search_processes";
 		$.ajax({
 	   		type : "GET",
 	    	url : url
@@ -244,7 +244,7 @@ process.query = process.query.double_quotes();
 
 this.show_glass();
 var data = JSON.stringify(process);	
-var url = "http://toskana.ludicmedia.de:10000/update_search_process";
+var url = "http://www.philipp-burckhardt.com:10000/update_search_process";
  
    $.post(url,
             {
@@ -271,7 +271,7 @@ process.title = process.title.double_quotes();
 process.query = process.query.double_quotes();
 	
 var data = JSON.stringify(process);	
-var url = "http://toskana.ludicmedia.de:10000/new_search_process";
+var url = "http://philipp-burckhardt.com:10000/new_search_process";
  
    $.post(url,
             {
@@ -388,7 +388,7 @@ this.get_right_package = function()
 	if (!this.package_list[self.query_page_counter +1])
 		{
 		self.query_page_counter ++ ;
-		var url = "http://toskana.ludicmedia.de:10000/get_package?" + self.query_page_counter;
+		var url = "http://www.philipp-burckhardt.com:10000/get_package?" + self.query_page_counter;
 	    this.show_glass();
 		$.ajax({
 	   		type : "GET",
@@ -438,11 +438,11 @@ this.submit_query = function()
 	switch(database)
 	 {
 	 case "tweets":
-	 url = "http://toskana.ludicmedia.de:10000/tweet_query?" + query;
+	 url = "http://www.philipp-burckhardt.com:10000/tweet_query?" + query;
 	 break;
 	 
 	 case "articles":
-	 url = "http://toskana.ludicmedia.de:10000/query?" + query;
+	 url = "http://www.philipp-burckhardt.com:10000/query?" + query;
 	 break;	
 	 }
 		
@@ -567,11 +567,11 @@ var query = $("#sql_query").val();
 	switch(self.actual_db)
 	 {
 	 case "tweets":
-	 url = "http://toskana.ludicmedia.de:10000/tweet_download?" + self.actual_query;
+	 url = "http://www.philipp-burckhardt.com:10000/tweet_download?" + self.actual_query;
 	 break;
 	 
 	 case "articles":
-	 url = "http://toskana.ludicmedia.de:10000/query_download?" + self.actual_query;
+	 url = "http://www.philipp-burckhardt.com:10000/query_download?" + self.actual_query;
 	 break;	
 	 }
 			
@@ -663,7 +663,7 @@ this.twitter = function()
 // action for Twitter button
 this.twitter_query = function()
 	{
-	var url = "http://toskana.ludicmedia.de:10000/tweets"
+	var url = "http://www.philipp-burckhardt.com:10000/tweets"
 	
 	$.ajax({
    		type : "GET",
