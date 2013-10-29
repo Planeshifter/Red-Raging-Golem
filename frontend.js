@@ -27,6 +27,7 @@ this.actual_db = null;
 this.spinner = null;
 this.package_list = [];
 this.search_process_list = [];
+this.rss_process_list = [];
 this.process_edit_mode = true;
 
 this.trigger_search_process_edit = function(id)
@@ -69,6 +70,29 @@ for (var i = 0; i < data.length; i++)
 	}
 }
 
+this.paint_rss_processes = function(data)
+{
+for (var i = 0; i < data.length; i++)
+  {
+	var name = "sp_" + i;
+	var s = '<div class="search_process_info">';
+		s += '<div class="search_process_title" id="' + name +'">';
+		s += data[i].name;
+		s += '</div>';
+		// s += '<input type="checkbox" class="active_process" name="zutat" value="salami">';
+		s += '</div>';
+		
+	$("#rss_process_container").append(s);
+	
+	
+	 $("#"+name).attr("data_id", i);
+    $("#"+name).click(function(){
+    var id = $(this).attr("data_id");
+    self.trigger_search_process_edit(id);
+    });
+	}
+}
+
 this.load_all_search_processes = function()
 {
 
@@ -83,6 +107,20 @@ var url = "http://www.philipp-burckhardt.com:10000/all_search_processes";
 	   		self.paint_search_processes(data);
 	  		});	
 	
+}
+
+this.load_all_rss_processes = function()
+{
+var url = "http://www.philipp-burckhardt.com:10000/all_rss_processes";
+  $.ajax({
+	   		type : "GET",
+	    	url : url
+	
+	   		}).done(function(msg) {
+	   		var data = parseJson(msg);
+	   	    self.rss_process_list = data;
+	   		self.paint_rss_processes(data);
+	  		});	
 }
 
 this.help = function()
@@ -107,6 +145,25 @@ var x = document.getElementById("help");
 		}
 	else $("#help").show();
 			
+}
+
+
+this.process_rss = function()
+{
+var x = document.getElementById("admin_rss_process");
+  if (!x)
+		{
+		var s = '<div id="admin_rss_process">';
+		s   += '<div id="rss_process_toolbar">';
+		s   += '<div id="new_rss_process" class="search_process_button"><img src="images/plus.svg"/></div>';
+		s   += '<\div>';
+	    s   += '<div id="rss_process_container"></div>';
+		s   += '</div>';
+		
+	    $("body").append(s);
+      self.load_all_rss_processes();
+  }
+	else $("#admin_rss_process").show();
 }
 
 this.process_administration = function()
@@ -294,12 +351,21 @@ switch(page)
 	{
 	case "admin_search_process":
 		$("#query_form").hide();
+    $("#admin_rss_process").hide();
 	break;
+  
+  case "admin_rss_process":
+    $("#query_form").hide()
+    $("#admin_search_process").hide();
+		$("#search_process_form").hide();
+		$("#help").hide();
+  break;
 	
 	case "query_form":
 		$("#admin_search_process").hide();
 		$("#search_process_form").hide();
 		$("#help").hide();
+    $("#admin_rss_process").hide();
 	break;	
 	}	
 	
@@ -652,7 +718,7 @@ this.query = function()
 
 this.rss = function()
 	{
-	alert("RSS");
+	self.show_rss_process()	 
 	}
 
 this.twitter = function()
@@ -706,9 +772,9 @@ this.init = function()
     var height = window.innerHeight - $("#QueryBody").height() - 60;
     $("#FooterBar").css("height", height);
 
-	$("#rss").click( function(){
-		
-		self.rss();
+	$("#rss").click( function(){		
+		self.active_page("admin_rss_process");
+    self.process_rss();
 	  });
 	  
 	$("#twitter").click( function(){		

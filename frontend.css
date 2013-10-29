@@ -226,6 +226,15 @@ position: relative;
 background-image: url(images/tweed.png);	
 }
 
+#rss_process_toolbar
+{
+height: 36px;
+width: 100%;
+position: relative;
+background-image: url(images/tweed.png);  
+}
+
+
 .search_process_button
 {
 position: relative;
@@ -305,6 +314,24 @@ left:0.5%;
 top: 10%;
 /* background-image: url(images/tweed.png); 
 background-repeat: repeat;	*/
+background: grey;
+z-index: 100;
+
+-o-box-shadow:       0 2px 6px #000000;
+-moz-box-shadow:     0 2px 6px #000000;
+-webkit-box-shadow:  0 2px 6px #000000;
+ box-shadow:         0 2px 6px #000000;		
+}
+
+#admin_rss_process
+{
+position: absolute;
+width: 23%;
+height: 85%;
+left:0.5%;
+top: 10%;
+/* background-image: url(images/tweed.png); 
+background-repeat: repeat;  */
 background: grey;
 z-index: 100;
 
